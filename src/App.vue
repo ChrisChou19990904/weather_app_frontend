@@ -8,7 +8,7 @@
     <div class="search-box">
       <input
           v-model="cityInput"
-          placeholder="輸入城市名稱 (例如: London)"
+          placeholder="輸入城市的'英文'名稱 (例如: London)"
           @keyup.enter="handleSearch"
       />
       <button @click="handleSearch" :disabled="weatherStore.isLoading">
