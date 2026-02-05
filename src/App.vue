@@ -8,7 +8,7 @@
     <div class="search-box">
       <input
           v-model="cityInput"
-          placeholder="輸入城市的'英文'名稱 (例如: London)；輸入他國語言會失效"
+          placeholder="輸入城市的'英文'名稱 (例如: London)"
           @keyup.enter="handleSearch"
       />
       <button @click="handleSearch" :disabled="weatherStore.isLoading">
@@ -19,7 +19,14 @@
     <div v-if="weatherStore.history.length > 0" class="history-list">
       <div class="history-header">
         <span>最近搜尋：</span>
-        <small class="disclaimer">（紀錄僅供本次體驗，伺服器重啟後將自動清空）</small>
+        <div class="disclaimer-container" style="margin-top: 10px; line-height: 1.5;">
+          <small class="disclaimer" style="color: #7f8c8d; display: block;">
+            ⚠️ <strong>Persistence Note:</strong> 紀錄儲存於 H2 記憶體資料庫，當 Render 服務重啟或進入休眠喚醒後，數據將自動重置。
+          </small>
+          <small class="disclaimer" style="color: #e67e22; display: block;">
+            ⚙️ <strong>Encoding Constraint:</strong> 當前版本尚未實作 URL UTF-8 編碼轉換。為確保 REST API 請求符合 RFC 3986 規範，請使用英文 ASCII 字元進行城市檢索（例如：Taipei）。
+          </small>
+        </div>
       </div>
       <button
           v-for="item in weatherStore.history"
