@@ -8,7 +8,7 @@ const API_BASE_URL = import.meta.env.PROD
 
 const api = axios.create({
     baseURL: API_BASE_URL + '/api', // 統一加上 /api 前綴
-    timeout: 10000,
+    timeout: 60000,
 });
 
 export const weatherService = {
