@@ -56,6 +56,21 @@
         <span>濕度: {{ weatherStore.currentWeather.humidity }}%</span>
       </div>
     </div>
+    <div class="share-section" style="margin: 30px 0; text-align: center; border-top: 1px solid #eee; pt-20">
+      <p style="color: #666; font-size: 0.9rem; margin-bottom: 15px;">覺得好用嗎？分享給朋友：</p>
+
+      <div class="social-links">
+        <a :href="shareLinks.fb" target="_blank" class="share-btn fb">Facebook</a>
+        <span class="divider">|</span>
+        <a :href="shareLinks.line" target="_blank" class="share-btn line">Line</a>
+        <span class="divider">|</span>
+        <a :href="shareLinks.twitter" target="_blank" class="share-btn x">X (Twitter)</a>
+      </div>
+
+      <button @click="handleNativeShare" class="native-share-btn" style="margin-top: 15px;">
+        更多分享方式
+      </button>
+    </div>
     <div class="weather-container">
       <Footer />
     </div>
@@ -81,13 +96,66 @@ const quickSearch = (city) => {
     weatherStore.fetchHistory(); // 搜尋完後更新歷史清單
   });
 };
+import { computed } from 'vue';
 
+const currentUrl = window.location.href;
+const shareText = "這是我用 Vue3 和 Spring Boot 開發的天氣預報 App，快來看看！";
+
+const shareLinks = computed(() => {
+  const url = encodeURIComponent(currentUrl);
+  const text = encodeURIComponent(shareText);
+  return {
+    fb: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+    line: `https://social-plugins.line.me/lineit/share?url=${url}`,
+    twitter: `https://twitter.com/intent/tweet?url=${url}&text=${text}`
+  };
+});
+
+const handleNativeShare = async () => {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'Vue3 x Spring Boot 天氣預報',
+        text: shareText,
+        url: currentUrl,
+      });
+    } catch (err) {
+      console.log('User cancelled share');
+    }
+  } else {
+    alert('您的瀏覽器不支援原生分享，請點擊上方的社群連結！');
+  }
+};
 onMounted(() => {
   weatherStore.fetchHistory(); // 初始載入歷史紀錄
 });
 </script>
 
 <style scoped>
+.share-btn {
+  text-decoration: none;
+  font-weight: bold;
+  transition: opacity 0.3s;
+}
+.fb { color: #4267B2; }
+.line { color: #00C300; }
+.x { color: #000000; } /* X 現在通常用黑色 */
+
+.divider {
+  margin: 0 12px;
+  color: #ddd;
+}
+
+.native-share-btn {
+  background: #f0f2f5;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #555;
+}
+.native-share-btn:hover { background: #e4e6e9; }
 /* 基礎容器 */
 .weather-container {
   max-width: 450px;
