@@ -22,6 +22,9 @@
       <small class="disclaimer" style="color: #e67e22; display: block;">
         ⚙️ <strong>Encoding Constraint:</strong> 當前版本尚未實作 URL UTF-8 編碼轉換。為確保 REST API 請求符合 RFC 3986 規範，請使用英文 ASCII 字元進行城市檢索（例如：Taipei）。
       </small>
+      <small class="disclaimer" style="color: #3498db; display: block;">
+        🌐 <strong>Timezone Insight:</strong> 觀測時間以 <strong>UTC (格林威治標準時間)</strong> 顯示。這是因為後端採用 <code>LocalDateTime.now()</code> 獲取伺服器原生時間，而 Render 雲端環境預設運行於 UTC 時區。這展示了分散式系統中「伺服器時區」與「用戶本地時區」的典型差異。
+      </small>
     </div>
     <div v-if="weatherStore.history.length > 0" class="history-list">
       <div class="history-header">
