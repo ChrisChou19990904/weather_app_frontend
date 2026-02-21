@@ -99,7 +99,7 @@ const quickSearch = (city) => {
 import { computed } from 'vue';
 
 const currentUrl = window.location.href;
-const shareText = "這是我用 Vue3 和 Spring Boot 開發的天氣預報 App，快來看看！";
+const shareText = "這是chou.yenting@gmail.com用 Vue3 和 Spring Boot 開發的天氣預報 App，快來看看！";
 
 const shareLinks = computed(() => {
   const url = encodeURIComponent(currentUrl);
