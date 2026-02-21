@@ -91,10 +91,14 @@ const handleSearch = () => {
   }
 };
 const quickSearch = (city) => {
-  cityInput.value = city; // 把點擊的城市填入輸入框
+  cityInput.value = city;
+  // 直接執行即可，fetchWeather 內部已經會更新歷史紀錄
+  weatherStore.fetchWeather(city);
+  /**cityInput.value = city; // 把點擊的城市填入輸入框
   weatherStore.fetchWeather(city).then(() => {
-    weatherStore.fetchHistory(); // 搜尋完後更新歷史清單
-  });
+    weatherStore.fetchHistory();
+   // 搜尋完後更新歷史清單
+  });**/
 };
 import { computed } from 'vue';
 

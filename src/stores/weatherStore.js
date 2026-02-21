@@ -28,12 +28,21 @@ export const useWeatherStore = defineStore('weather', {
 
         async fetchHistory() {
             try {
-                // ❌ 錯誤：axios.get('/api/history') 會連到 GitHub
-                // ✅ 修正：使用 weatherService，它才會連到 Render
                 const response = await weatherService.getHistory();
+                const rawData = response.data;
 
-                console.log("這次拿到的陣列資料:", response.data);
-                this.history = response.data;
+                // 1. 利用 Map 進行去重：Key 是城市名稱，Value 是該筆資料物件
+                // 先按 ID 升冪排，這樣後面的「新 ID」就會覆蓋掉前面的「舊 ID」
+                const uniqueMap = new Map();
+                rawData.sort((a, b) => a.id - b.id).forEach(item => {
+                    uniqueMap.set(item.cityName, item);
+                });
+
+                // 2. 將 Map 轉回陣列，並按 ID 降冪排序（最新 ID 在前）
+                this.history = Array.from(uniqueMap.values())
+                    .sort((a, b) => b.id - a.id);
+
+                console.log("去重並排序後的歷史紀錄:", this.history);
             } catch (err) {
                 console.error('抓取歷史失敗', err);
             }
