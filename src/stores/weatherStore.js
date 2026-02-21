@@ -12,15 +12,18 @@ export const useWeatherStore = defineStore('weather', {
     actions: {
         async fetchWeather(city) {
             this.isLoading = true;
-            this.error = null;
             try {
-                // ✅ 正確：使用封裝好的 service
+                // Step 1: 先獲取天氣資料 (這會觸發後端的 searchHistoryRepository.save)
                 const response = await weatherService.getWeatherByCity(city);
                 this.currentWeather = response.data;
+
+                // Step 2: 這裡加上一個極短的延遲 (可選，確保資料庫已寫入完成)
+                // await new Promise(resolve => setTimeout(resolve, 100));
+
+                // Step 3: 確定搜尋成功後，才呼叫抓取歷史
                 await this.fetchHistory();
             } catch (err) {
-                this.error = '無法取得氣象資料，請檢查後端是否啟動';
-                console.error(err);
+                console.error('搜尋失敗:', err);
             } finally {
                 this.isLoading = false;
             }
