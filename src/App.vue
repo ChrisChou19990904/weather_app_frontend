@@ -25,6 +25,9 @@
       <small class="disclaimer" style="color: #3498db; display: block;">
         🌐 <strong>Timezone Insight:</strong> 觀測時間以 <strong>UTC (格林威治標準時間)</strong> 顯示。這是因為後端採用 <code>LocalDateTime.now()</code> 獲取伺服器原生時間，而 Render 雲端環境預設運行於 UTC 時區。這展示了分散式系統中「伺服器時區」與「用戶本地時區」的典型差異。
       </small>
+      <small class="disclaimer" style="color: #9b59b6; display: block;">
+        🤝 <strong>Shared Experience:</strong> 當前搜尋紀錄採「全局共享」設計。這展示了分散式系統在未實作「用戶隔離 (Multi-tenancy)」時，不同終端存取同一持久層 (H2 Database) 所產生的資料同步現象。
+      </small>
     </div>
     <div v-if="weatherStore.history.length > 0" class="history-list">
       <div class="history-header">
