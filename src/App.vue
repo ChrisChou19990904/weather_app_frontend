@@ -28,6 +28,12 @@
       <small class="disclaimer" style="color: #9b59b6; display: block;">
         🤝 <strong>Shared Experience:</strong> 當前搜尋紀錄採「全局共享」設計。這展示了分散式系統在未實作「用戶隔離 (Multi-tenancy)」時，不同終端存取同一持久層 (H2 Database) 所產生的資料同步現象。
       </small>
+      <small class="disclaimer" style="color: #16a085; display: block;">
+        📱 <strong>Native Share Behavior:</strong> 在行動裝置上使用「更多分享方式」時，系統將自動帶入預設推薦文字。
+      </small>
+      <small class="disclaimer" style="color: #7f8c8d; display: block;">
+        💻 <strong>Desktop Constraint:</strong> 受限於電腦版瀏覽器與各社群平台 (如 Facebook, Line) 之網頁版 API 規範，部分裝置環境下僅支援連結分享，預設文字可能因平台隱私政策而無法自動填入。
+      </small>
     </div>
     <div v-if="weatherStore.history.length > 0" class="history-list">
       <div class="history-header">
